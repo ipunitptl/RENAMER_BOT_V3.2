@@ -2,6 +2,20 @@ import asyncio
 from pyrogram import Client, compose,idle
 import os
 
+from flask import Flask
+from threading import Thread
+
+web = Flask(__name__)
+
+@web.route("/")
+def home():
+    return "Bot Running"
+
+def run_web():
+    web.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+
+Thread(target=run_web).start()
+
 from plugins.cb_data import app as Client2
 
 TOKEN = os.environ.get("TOKEN", "")
